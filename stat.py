@@ -15,7 +15,7 @@ def deviceStat():
 #printing the iostat at 2 sec interval 3 times
 	for i in range(3):
 		
-		iostat = os.popen("iostat sda").read()
+		iostat = os.popen("iostat sda ").read()
 		print(iostat)
 		time.sleep(1)
 
@@ -133,9 +133,11 @@ def blockStat():
 	print("Blockstat - Parsing the blocktrace files with blkparse::")
 	print("--------------------------------------------------------")
 	core = int(input("Enter the sda core which you want to trace:"))
-	os.popen("sudo blktrace /dev/sda -w 2")
-	os.popen("sudo blkparse -i /home/swaroop/SubSystemStat/sda.blktrace.{} > /home/swaroop/trace3.txt".format(core))
-	print("Parsing done and dumped into blktrace.txt")
+	# os.popen("sudo blktrace /dev/sda -w 2")
+	os.popen("sudo blkparse -i /home/swaroop/SubSystemStat/sda.blktrace.3 > /home/swaroop/SubSystemStat/blkparse.txt")
+	# btt command for analysing the latency
+	os.system("sudo btt -i sda.blktrace.3 > /home/swaroop/SubSystemStat/btt.txt")
+	print("Parsing done and dumped into blktrace.txt and btt.txt respectively")
 	print()
 
 #To trace the function calls and analyse the latencies
@@ -159,6 +161,7 @@ def ftrace_functionGraph():
 	time.sleep(5)
 	os.popen("sudo echo 0 > tracing_on") 
 	os.popen("cp trace /home/swaroop/SubSystemStat/trace2.txt")
+	os.popen("cat /home/swaroop/SubSystemStat/ftrace_functionGraph.txt | grep ! -B 10 > /home/swaroop/SubSystemStat/ftrace_latency.txt")
 
 #To trace the system calls with a specific pid passed as an argument to the program	
 def strace():
@@ -172,7 +175,7 @@ if __name__=="__main__":
 	deviceStat()
 	blockStat()
 	partitionStat()
-	ftrace_function()
-	#ftrace_functionGraph()
+	#ftrace_function()
+	ftrace_functionGraph()
 	#strace()
 		
