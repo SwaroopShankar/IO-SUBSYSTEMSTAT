@@ -12,7 +12,7 @@ def deviceStat():
 	print("---------------------------")
 	print("---------------------------")
 	
-
+#printing the iostat at 2 sec interval 3 times
 	for i in range(3):
 		
 		iostat = os.popen("iostat sda").read()
@@ -23,15 +23,16 @@ def deviceStat():
 	print("---------------------------")
 	print("---------------------------")
 
+#User inputs the time gap for the sda/stat files
 	timer = int(input("Enter the time interval between sda/stats:"))
 
-
+#The sda/stat at present time is read and preprocessed using regular expressions.
 	stats = os.popen("cat /sys/block/sda/stat").read()
 	stats_split = re.sub(r"\s+", " ", stats, flags=re.UNICODE)
 	stats_split = stats_split.strip()
 	stats_split = stats_split.split(' ')
 	stats_array = stats_split
-	 
+#The stat is stored in the form of a list
 	time.sleep(timer)
 	stats_2 = os.popen("cat /sys/block/sda/stat").read()
 	stats_split_2 = re.sub(r"\s+", " ", stats_2, flags=re.UNICODE)
