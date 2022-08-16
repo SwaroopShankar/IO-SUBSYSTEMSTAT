@@ -134,7 +134,7 @@ def blockStat():
 	print("--------------------------------------------------------")
 	core = int(input("Enter the sda core which you want to trace:"))
 	# os.popen("sudo blktrace /dev/sda -w 2")
-	os.popen("sudo blkparse -i /home/swaroop/SubSystemStat/sda.blktrace.3 > /home/swaroop/SubSystemStat/blkparse.txt")
+	os.popen("sudo blkparse -i /home/swaroop/SubSystemStat/sda.blktrace.{} > /home/swaroop/SubSystemStat/blkparse.txt".format(core))
 	# btt command for analysing the latency
 	os.system("sudo btt -i sda.blktrace.3 > /home/swaroop/SubSystemStat/btt.txt")
 	print("Parsing done and dumped into blktrace.txt and btt.txt respectively")
@@ -160,7 +160,7 @@ def ftrace_functionGraph():
 	os.popen("sudo echo 1 > tracing_on")
 	time.sleep(5)
 	os.popen("sudo echo 0 > tracing_on") 
-	os.popen("cp trace /home/swaroop/SubSystemStat/trace2.txt")
+	os.popen("cp trace /home/swaroop/SubSystemStat/ftrace_functionGraph.txt")
 	os.popen("cat /home/swaroop/SubSystemStat/ftrace_functionGraph.txt | grep ! -B 10 > /home/swaroop/SubSystemStat/ftrace_latency.txt")
 
 #To trace the system calls with a specific pid passed as an argument to the program	
